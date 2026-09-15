@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>BusBuzz</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../static/adminResources/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../static/adminResources/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../static/adminResources/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+   {% include 'admin/header.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      <div id="settings-trigger"><i class="mdi mdi-format-color-fill"></i></div>
+      <div id="theme-settings" class="settings-panel">
+        <i class="settings-close mdi mdi-close"></i>
+        <p class="settings-heading">SIDEBAR SKINS</p>
+        <div class="sidebar-bg-options selected" id="sidebar-default-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Default</div>
+        <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
+        <div class="color-tiles mx-0 px-4">
+          <div class="tiles primary"></div>
+          <div class="tiles success"></div>
+          <div class="tiles warning"></div>
+          <div class="tiles danger"></div>
+          <div class="tiles info"></div>
+          <div class="tiles dark"></div>
+          <div class="tiles default light"></div>
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {% include 'admin/menu.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="page-header">
+{#            <h3 class="page-title">#}
+{#              Orders#}
+{#            </h3>#}
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Buses</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bus List
+                    </li>
+              </ol>
+            </nav>
+          </div>
+       
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+<div class="row">
+                        <div class="col-9" style="margin-top: 15px;"><h4
+                                                class="card-title">Bus List 
+                            </h4></div>
+                        <div class="col-2 btn bt">
+                           <a class="btn btn-outline-primary btn-fw"
+   href="{% url 'admin_load_bus' %}"
+   style="margin: -30px; margin-bottom: -30%;
+          margin-left: 55%;">
+    +ADD NEW
+</a></div>
+                    </div>
+{#               <hr style="margin-bottom: -1%;">                  #}
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+                        <table id="order-listing" class="table">
+                          <thead>
+                            <tr class="bg-primary text-white">
+                                <th>#</th>
+                                <th>Date/Time Updated</th>
+                                <th>Bus</th>
+                                <th>Category</th>
+                                <th>Seats</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in buses_vo_list %}
+                           <tr>
+
+                               <td><input type="checkbox" class="sub_chk"
+                                           data-id="1"></td>
+                                <td>
+                                    {{ i.bus_date_updated|date:"d-m-Y h:i A" }}</td>
+                                <td>{{ i.bus_number }}</td>
+                                <td> {{ i.bus_category_vo.category_name }}</td>
+                                <td>{{ i.bus_seats }}</td>
+                               <td class="px-1 py-1 align-middle text-center">
+                                {% if i.bus_status == '1' %}
+                                <span class="badge badge-primary badge-pill
+">Active</span> {% else %}
+                                <span class="badge badge-danger badge-pill
+">Inactive</span> {% endif %}
+                            </td>
+                                <td class="text-center">
+
+    <!-- Edit Bus -->
+    <a href="{% url 'admin_edit_bus' %}?busId={{ i.bus_id }}"
+       class="btn btn-light">
+        <span class="mdi mdi-table-edit text-primary"></span>
+    </a>
+
+    <!-- Delete Bus -->
+    <form method="post"
+          action="{% url 'admin_delete_bus' %}"
+          style="display: inline;">
+
+        {% csrf_token %}
+
+        <input type="hidden"
+               name="busId"
+               value="{{ i.bus_id }}">
+
+        <button type="submit"
+                class="btn btn-light"
+                onclick="return confirm('Are you sure you want to delete this bus?');">
+
+            <span class="mdi mdi-delete-forever text-danger"></span>
+
+        </button>
+
+    </form>
+
+</td>
+                            
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+  <script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="../../static/adminResources/js/off-canvas.js"></script>
+  <script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+  <script src="../../static/adminResources/js/misc.js"></script>
+  <script src="../../static/adminResources/js/settings.js"></script>
+  <script src="../../static/adminResources/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../static/adminResources/js/data-table.js"></script>
+  <script src="../../static/adminResources/js/alerts.js"></script>
+  <script src="../../static/adminResources/js/avgrund.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{##}
+{#<head>#}
+{#  <!-- Required meta tags -->#}
+{#  <meta charset="utf-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#  <title>Gleam Admin</title>#}
+{#  <!-- plugins:css -->#}
+{#  <link rel="stylesheet" href="../../static/adminResources/css/materialdesignicons.min.css">#}
+{#  <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.base.css">#}
+{#  <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.addons.css">#}
+{#  <!-- endinject -->#}
+{#  <!-- inject:css -->#}
+{#  <link rel="stylesheet" href="../../static/adminResources/css/style.css">#}
+{#  <!-- endinject -->#}
+{#  <link rel="shortcut icon" href="../../static/adminResources/images/favicon.png" />#}
+{#</head>#}
+{##}
+{#<body>#}
+{#  <div class="container-scroller">#}
+{#    <!-- partial:../../partials/_navbar.html -->#}
+{#    {% include 'admin/header.html' %}#}
+{#    <!-- partial -->#}
+{#    <div class="container-fluid page-body-wrapper">#}
+{#      <!-- partial:../../partials/_settings-panel.html -->#}
+{#      <div id="settings-trigger"><i class="mdi mdi-format-color-fill"></i></div>#}
+{#      <div id="theme-settings" class="settings-panel">#}
+{#        <i class="settings-close mdi mdi-close"></i>#}
+{#        <p class="settings-heading">SIDEBAR SKINS</p>#}
+{#        <div class="sidebar-bg-options selected" id="sidebar-default-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Default</div>#}
+{#        <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>#}
+{#        <p class="settings-heading mt-2">HEADER SKINS</p>#}
+{#        <div class="color-tiles mx-0 px-4">#}
+{#          <div class="tiles primary"></div>#}
+{#          <div class="tiles success"></div>#}
+{#          <div class="tiles warning"></div>#}
+{#          <div class="tiles danger"></div>#}
+{#          <div class="tiles info"></div>#}
+{#          <div class="tiles dark"></div>#}
+{#          <div class="tiles default light"></div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <!-- partial -->#}
+{#      <!-- partial:../../partials/_sidebar.html -->#}
+{#      {% include 'admin/menu.html' %}#}
+{#      <!-- partial -->#}
+{#      <div class="main-panel">#}
+{#        <div class="content-wrapper">#}
+{#          <div class="page-header">#}
+{#            <h3 class="page-title">#}
+{#              Categories#}
+{#            </h3>#}
+{#            <nav aria-label="breadcrumb">#}
+{#              <ol class="breadcrumb">#}
+{#                <li class="breadcrumb-item"><a href="#">#}
+{#                    Categories</a></li>#}
+{#                <li class="breadcrumb-item active"#}
+{#                    aria-current="page">View Categories</li>#}
+{#              </ol>#}
+{#            </nav>#}
+{#          </div>#}
+{#          <div class="row">#}
+{#            <div class="col-12">#}
+{#              <div class="card" style="box-shadow: 1px 1px 10px grey">#}
+{#                <div class="card-body">#}
+{#                    <div class="row">#}
+{#                        <div class="col-9" style="margin-top: 15px;"><h4#}
+{#                                                class="card-title">Trip#}
+{#                            Categories</h4></div>#}
+{#                        <div class="col-2 btn bt">#}
+{#                            <a   class="btn btn-outline-primary btn-fw"#}
+{#                                 href="/admin/load_addbusses/"#}
+{#                               style="margin: -30px; margin-bottom: -30%;#}
+{#                               margin-left: 55%;" >#}
+{#                                +ADD NEW#}
+{#                            </a></div>#}
+{#                    </div>#}
+{##}
+{##}
+{#                    <hr style="margin-bottom: -1%;">#}
+{#                  <div class="row grid-margin">#}
+{#                    <div class="col-12">#}
+{#                      <div class="alert alert-warning" role="alert">#}
+{#                          <strong>Heads up!</strong> This alert needs your attention, but it's not super important.#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="row">#}
+{#                    <div class="col-12">#}
+{#                      <div class="table-responsive">#}
+{#                        <table id="order-listing" class="table">#}
+{#                          <thead>#}
+{##}
+{#                            <tr class="bg-primary text-white">#}
+{#                                <th> #</th>#}
+{#                                <th>Date/Time</th>#}
+{#                                <th>Name</th>#}
+{#                                <th>Description</th>#}
+{##}
+{#                                <th>Status</th>#}
+{#                                <th>Actions</th>#}
+{#                            </tr>#}
+{#                          </thead>#}
+{#                            {% for i in category_vo_list %}#}
+{#                          <tbody>#}
+{#                            <tr>#}
+{##}
+{#                               <td><input type="checkbox" class="sub_chk"#}
+{#                                           data-id="1"></td>#}
+{#                                <td>{{ i.bus_date_created|date:"Y-m-d h:i A" }}</td>#}
+{#                                <td>{{ i.bus_name }}</td>#}
+{#                                <td> {{ i.bus_description }}</td>#}
+{##}
+{##}
+{#                               <td class="px-1 py-1 align-middle text-center">#}
+{#                                {% if i.bus_status == '1' %}#}
+{#                                <span class="badge badge-primary badge-pill#}
+{#">Active</span> {% else %}#}
+{#                                <span class="badge badge-danger badge-pill#}
+{#">Inactive</span> {% endif %}#}
+{#                            </td>#}
+{#                                <td class="text-center">#}
+{#                                    <button class="btn btn-light">#}
+{#                                    <a href="/admin/edit_busses?addbusId=#}
+{#{{ i.addbus_id }}"><span class="mdi mdi-table-edit#}
+{#                                    text-primary"></span></a>#}
+{#                                    </button>#}
+{#                                    <button class="btn btn-light">#}
+{#                                    <a href="/admin/delete_busses?addbusId=#}
+{#{{ i.addbus_id }}"><span class="mdi mdi-delete-forever#}
+{#                                    text-danger"></span></a>#}
+{#                                    </button>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                          </tbody>#}
+{#                            {% endfor %}#}
+{#                        </table>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <!-- content-wrapper ends -->#}
+{#        <!-- partial:../../partials/_footer.html -->#}
+{#       {% include 'admin/footer.html' %}#}
+{#        <!-- partial -->#}
+{#      </div>#}
+{#      <!-- main-panel ends -->#}
+{#    </div>#}
+{#    <!-- page-body-wrapper ends -->#}
+{#  </div>#}
+{#  <!-- container-scroller -->#}
+{#  <!-- plugins:js -->#}
+{#  <script src="../../static/adminResources/js/vendor.bundle.base.js"></script>#}
+{#  <script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>#}
+{#  <!-- endinject -->#}
+{#  <!-- inject:js -->#}
+{#  <script src="../../static/adminResources/js/off-canvas.js"></script>#}
+{#  <script src="../../static/adminResources/js/hoverable-collapse.js"></script>#}
+{#  <script src="../../static/adminResources/js/misc.js"></script>#}
+{#  <script src="../../static/adminResources/js/settings.js"></script>#}
+{#  <script src="../../static/adminResources/js/todolist.js"></script>#}
+{#  <!-- endinject -->#}
+{#  <!-- Custom js for this page-->#}
+{#  <script src="../../static/adminResources/js/data-table.js"></script>#}
+{#  <!-- End custom js for this page-->#}
+{#</body>#}
+{##}
+{#</html>#}

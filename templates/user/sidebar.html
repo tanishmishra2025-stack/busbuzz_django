@@ -1,0 +1,72 @@
+<aside class="user-sidebar">
+
+    <div class="sidebar-brand">
+
+        <a href="{% url 'user_load_dashboard' %}">
+            BusBuzz
+        </a>
+
+    </div>
+
+
+    <nav class="sidebar-content">
+
+        <div class="sidebar-title">
+            Menu
+        </div>
+
+
+        <a href="{% url 'user_load_dashboard' %}"
+           class="sidebar-link {% if active_page == 'home' %}active{% endif %}">
+
+            <span class="sidebar-icon">⌂</span>
+
+            <span class="sidebar-text">
+                Home
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'user_load_findtrip' %}"
+           class="sidebar-link {% if active_page == 'find_trip' %}active{% endif %}">
+
+            <span class="sidebar-icon">⌕</span>
+
+            <span class="sidebar-text">
+                Find Trip
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'user_my_trips' %}"
+           class="sidebar-link {% if active_page == 'my_trips' %}active{% endif %}">
+
+            <span class="sidebar-icon">▣</span>
+
+            <span class="sidebar-text">
+                My Trips
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <a href="{% url 'admin_load_logout' %}"
+           class="sidebar-link logout">
+
+            <span class="sidebar-icon">↪</span>
+
+            <span class="sidebar-text">
+                Sign Out
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>

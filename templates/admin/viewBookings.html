@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1,
+                   shrink-to-fit=no">
+
+    <title>
+        BusBuzz Admin - Manage Bookings
+    </title>
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/materialdesignicons.min.css">
+
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.base.css">
+
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.addons.css">
+
+    <!-- Main Admin CSS -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/style.css">
+
+    <link rel="shortcut icon"
+          href="../../static/adminResources/images/favicon.png">
+</head>
+
+
+<body>
+
+<div class="container-scroller">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    {% include 'admin/header.html' %}
+
+
+    <div class="container-fluid page-body-wrapper">
+
+
+        <!-- =========================
+             THEME SETTINGS
+        ========================== -->
+
+        <div id="settings-trigger">
+            <i class="mdi mdi-format-color-fill"></i>
+        </div>
+
+
+        <div id="theme-settings"
+             class="settings-panel">
+
+            <i class="settings-close mdi mdi-close"></i>
+
+
+            <p class="settings-heading">
+                SIDEBAR SKINS
+            </p>
+
+
+            <div class="sidebar-bg-options selected"
+                 id="sidebar-default-theme">
+
+                <div class="img-ss rounded-circle
+                            bg-light border mr-3">
+                </div>
+
+                Default
+
+            </div>
+
+
+            <div class="sidebar-bg-options"
+                 id="sidebar-dark-theme">
+
+                <div class="img-ss rounded-circle
+                            bg-dark border mr-3">
+                </div>
+
+                Dark
+
+            </div>
+
+
+            <p class="settings-heading mt-2">
+                HEADER SKINS
+            </p>
+
+
+            <div class="color-tiles mx-0 px-4">
+
+                <div class="tiles primary"></div>
+                <div class="tiles success"></div>
+                <div class="tiles warning"></div>
+                <div class="tiles danger"></div>
+                <div class="tiles info"></div>
+                <div class="tiles dark"></div>
+                <div class="tiles default light"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ADMIN SIDEBAR
+        ========================== -->
+        {% include 'admin/menu.html' %}
+
+
+        <!-- =========================
+             MAIN PANEL
+        ========================== -->
+
+        <div class="main-panel">
+
+
+            <div class="content-wrapper">
+
+
+                <!-- =========================
+                     PAGE HEADER
+                ========================== -->
+
+                <div class="page-header">
+
+                    <nav aria-label="breadcrumb">
+
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item">
+
+                                <a href="{% url 'admin_view_managebooking' %}">
+                                    Manage Bookings
+                                </a>
+
+                            </li>
+
+
+                            <li class="breadcrumb-item active"
+                                aria-current="page">
+
+                                Booking List
+
+                            </li>
+
+                        </ol>
+
+                    </nav>
+
+                </div>
+
+
+                <!-- =========================
+                     BOOKING LIST CARD
+                ========================== -->
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+
+                                <!-- CARD TITLE -->
+
+                                <div class="row">
+
+                                    <div class="col-12"
+                                         style="margin-top: 15px;">
+
+                                        <h4 class="card-title">
+                                            Booking List
+                                        </h4>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =========================
+                                     BOOKING TABLE
+                                ========================== -->
+
+                                <div class="row">
+
+                                    <div class="col-12">
+
+                                        <div class="table-responsive">
+
+
+                                            <table id="order-listing"
+                                                   class="table booking-list-table">
+
+
+                                                <!-- TABLE HEADER -->
+
+                                                <thead>
+
+                                                <tr class="bg-primary text-white">
+
+                                                    <th>
+                                                        #
+                                                    </th>
+
+                                                    <th>
+                                                        Booking Code
+                                                    </th>
+
+                                                    <th>
+                                                        Customer
+                                                    </th>
+
+                                                    <th>
+                                                        Passenger
+                                                    </th>
+
+                                                    <th>
+                                                        Route
+                                                    </th>
+
+                                                    <th>
+                                                        Trip
+                                                    </th>
+
+                                                    <th class="text-center">
+                                                        Seats
+                                                    </th>
+
+                                                    <th>
+                                                        Total
+                                                    </th>
+
+                                                    <th class="text-center">
+                                                        Status
+                                                    </th>
+
+                                                    <th class="text-center">
+                                                        Action
+                                                    </th>
+
+                                                </tr>
+
+                                                </thead>
+
+
+                                                <!-- TABLE BODY -->
+
+                                                <tbody>
+
+
+                                                {% if bookings %}
+
+
+                                                    {% for booking in bookings %}
+
+
+                                                        <tr>
+
+
+                                                            <!-- NUMBER -->
+
+                                                            <td class="align-middle">
+
+                                                                {{ forloop.counter }}
+
+                                                            </td>
+
+
+                                                            <!-- BOOKING CODE -->
+
+                                                            <td class="align-middle booking-code">
+
+                                                                <strong class="text-primary">
+
+                                                                    {{ booking.booking_code }}
+
+                                                                </strong>
+
+                                                            </td>
+
+
+                                                            <!-- CUSTOMER -->
+
+                                                            <td class="align-middle booking-customer">
+
+                                                                {{ booking.booking_user.username }}
+
+                                                            </td>
+
+
+                                                            <!-- PASSENGER -->
+
+                                                            <td class="align-middle booking-passenger">
+
+                                                                {{ booking.booking_name }}
+
+                                                            </td>
+
+
+                                                            <!-- ROUTE -->
+
+                                                            <td class="align-middle booking-route">
+
+                                                                <strong>
+
+                                                                    {{ booking.booking_schedule_vo.depart_locations_vo.locations_name }}
+
+                                                                </strong>
+
+
+                                                                <span class="text-primary">
+                                                                    →
+                                                                </span>
+
+
+                                                                <strong>
+
+                                                                    {{ booking.booking_schedule_vo.destination_locations_vo.locations_name }}
+
+                                                                </strong>
+
+                                                            </td>
+
+
+                                                            <!-- TRIP DETAILS -->
+
+                                                            <td class="align-middle booking-trip">
+
+                                                                <strong>
+
+                                                                    {{ booking.booking_schedule_vo.trip_scheduled|date:"d M Y" }}
+
+                                                                </strong>
+
+
+                                                                <br>
+
+
+                                                                {{ booking.booking_schedule_vo.trip_scheduled|date:"h:i A" }}
+
+
+                                                                <br>
+
+
+                                                                <span class="text-muted">
+
+                                                                    Bus:
+
+                                                                    {{ booking.booking_schedule_vo.schedule_bus_vo.bus_number }}
+
+                                                                </span>
+
+                                                            </td>
+
+
+                                                            <!-- SEATS -->
+
+                                                            <td class="align-middle
+                                                                       text-center
+                                                                       booking-seats">
+
+                                                                {{ booking.booking_seats }}
+
+                                                            </td>
+
+
+                                                            <!-- TOTAL -->
+
+                                                            <td class="align-middle booking-total">
+
+                                                                <strong>
+
+                                                                    {{ booking.total_payable|floatformat:2 }}
+
+                                                                </strong>
+
+                                                            </td>
+
+
+                                                            <!-- STATUS -->
+
+                                                            <td class="align-middle
+                                                                       text-center
+                                                                       booking-status">
+
+
+                                                                {% if booking.booking_status == '1' %}
+
+
+                                                                    <span class="badge
+                                                                                 badge-warning
+                                                                                 badge-pill">
+
+                                                                        Pending
+
+                                                                    </span>
+
+
+                                                                {% elif booking.booking_status == '2' %}
+
+
+                                                                    <span class="badge
+                                                                                 badge-success
+                                                                                 badge-pill">
+
+                                                                        Paid
+
+                                                                    </span>
+                                                                {% elif booking.booking_status == '3' %}
+
+                                                                    <span class="badge badge-danger badge-pill">
+        Cancelled
+    </span>
+
+
+                                                                {% else %}
+
+
+                                                                    <span class="badge
+                                                                                 badge-secondary
+                                                                                 badge-pill">
+
+                                                                        Unknown
+
+                                                                    </span>
+
+
+                                                                {% endif %}
+
+
+                                                            </td>
+
+
+                                                            <!-- ACTION -->
+
+                                                            <!-- ACTION -->
+
+                                                            <td class="align-middle
+           text-center
+           booking-action">
+
+
+                                                                {% if booking.booking_status == '1' %}
+
+
+                                                                    <form method="post"
+                                                                          action="{% url 'admin_mark_booking_paid' %}"
+                                                                          style="display: inline;">
+
+                                                                        {% csrf_token %}
+
+
+                                                                        <input type="hidden"
+                                                                               name="bookingId"
+                                                                               value="{{ booking.booking_id }}">
+
+
+                                                                        <button type="submit"
+                                                                                class="btn
+                           btn-success
+                           btn-sm"
+                                                                                title="Mark booking as paid"
+                                                                                onclick="return confirm('Confirm payment and mark this booking as Paid?');">
+
+                                                                            <span class="mdi mdi-check-circle"></span>
+
+                                                                            Mark
+                                                                            Paid
+
+                                                                        </button>
+
+
+                                                                    </form>
+
+
+                                                                {% elif booking.booking_status == '2' %}
+
+
+                                                                    <span class="text-success">
+
+            <span class="mdi mdi-check-circle"></span>
+
+            Paid
+
+        </span>
+
+
+                                                                {% elif booking.booking_status == '3' %}
+
+
+                                                                    <span class="text-danger">
+
+            <span class="mdi mdi-close-circle"></span>
+
+            Cancelled
+
+        </span>
+
+
+                                                                {% endif %}
+
+
+                                                            </td>
+
+
+                                                        </tr>
+
+
+                                                    {% endfor %}
+
+
+                                                {% else %}
+
+
+                                                    <!-- NO BOOKINGS -->
+
+                                                    <tr>
+
+                                                        <td colspan="10"
+                                                            class="text-center"
+                                                            style="padding: 40px;">
+
+                                                            No bookings found.
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                {% endif %}
+
+
+                                                </tbody>
+
+
+                                            </table>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+
+            <footer class="footer">
+
+                <div class="d-sm-flex
+                            justify-content-center
+                            justify-content-sm-between">
+
+
+                    <span class="text-muted
+                                 text-center
+                                 text-sm-left
+                                 d-block
+                                 d-sm-inline-block">
+
+                        Copyright © 2018
+
+                        <a href="https://www.bootstrapdash.com/"
+                           target="_blank">
+
+                            Bootstrapdash
+
+                        </a>.
+
+                        All rights reserved.
+
+                    </span>
+
+
+                    <span class="float-none
+                                 float-sm-right
+                                 d-block
+                                 mt-1
+                                 mt-sm-0
+                                 text-center">
+
+                        Hand-crafted & made with
+
+                        <i class="mdi mdi-heart text-danger"></i>
+
+                    </span>
+
+
+                </div>
+
+            </footer>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ADMIN JAVASCRIPT
+========================== -->
+
+<script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+
+<script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+
+<script src="../../static/adminResources/js/off-canvas.js"></script>
+
+<script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+
+<script src="../../static/adminResources/js/misc.js"></script>
+
+<script src="../../static/adminResources/js/settings.js"></script>
+
+<script src="../../static/adminResources/js/todolist.js"></script>
+
+<script src="../../static/adminResources/js/data-table.js"></script>
+
+
+</body>
+
+</html>

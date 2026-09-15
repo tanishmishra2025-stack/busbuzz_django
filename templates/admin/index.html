@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>BusBuzz Admin Dashboard</title>
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/materialdesignicons.min.css">
+
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.base.css">
+
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.addons.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/style.css">
+
+    <link rel="shortcut icon"
+          href="../../static/adminResources/images/favicon.png"/>
+</head>
+
+<body>
+
+<div class="container-scroller">
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    {% include 'admin/header.html' %}
+
+
+    <div class="container-fluid page-body-wrapper">
+
+        <!-- ================================================= -->
+        <!-- SETTINGS PANEL -->
+        <!-- ================================================= -->
+
+        <div id="settings-trigger">
+            <i class="mdi mdi-format-color-fill"></i>
+        </div>
+
+        <div id="theme-settings" class="settings-panel">
+
+            <i class="settings-close mdi mdi-close"></i>
+
+            <p class="settings-heading">
+                SIDEBAR SKINS
+            </p>
+
+            <div class="sidebar-bg-options selected"
+                 id="sidebar-default-theme">
+
+                <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                Default
+
+            </div>
+
+            <div class="sidebar-bg-options"
+                 id="sidebar-dark-theme">
+
+                <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                Dark
+
+            </div>
+
+            <p class="settings-heading mt-2">
+                HEADER SKINS
+            </p>
+
+            <div class="color-tiles mx-0 px-4">
+
+                <div class="tiles primary"></div>
+                <div class="tiles success"></div>
+                <div class="tiles warning"></div>
+                <div class="tiles danger"></div>
+                <div class="tiles info"></div>
+                <div class="tiles dark"></div>
+                <div class="tiles default light"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SIDEBAR -->
+        <!-- ================================================= -->
+
+        {% include 'admin/menu.html' %}
+
+
+        <!-- ================================================= -->
+        <!-- MAIN PANEL -->
+        <!-- ================================================= -->
+
+        <div class="main-panel">
+
+            <div class="content-wrapper">
+
+
+                <!-- ================================================= -->
+                <!-- PAGE HEADER -->
+                <!-- ================================================= -->
+
+                <div class="page-header">
+
+                    <h3 class="page-title">
+
+                        Dashboard
+
+                        <span class="ml-2 h6 font-weight-normal">
+                            Bus Reservation System v1
+                        </span>
+
+                    </h3>
+
+                    <nav aria-label="breadcrumb">
+
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item">
+                                Home
+                            </li>
+
+                            <li class="breadcrumb-item active"
+                                aria-current="page">
+                                Dashboard
+                            </li>
+
+                        </ol>
+
+                    </nav>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- TOP STATISTICS -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+
+                    <!-- New Bookings Today -->
+
+                    <div class="col-md-4 stretch-card grid-margin">
+
+                        <div class="card bg-gradient-danger
+                                    border-0 text-white p-3">
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-start">
+
+                                    <i class="mdi mdi-calendar mdi-48px"></i>
+
+                                    <div class="ml-4">
+
+                                        <h2 class="mb-2">
+                                            {{ new_bookings_today }}
+                                        </h2>
+
+                                        <h4 class="mb-0">
+                                            New Bookings Today
+                                        </h4>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Departures Today -->
+
+                    <div class="col-md-4 stretch-card grid-margin">
+
+                        <div class="card bg-gradient-info
+                                    border-0 text-white p-3">
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-start">
+
+                                    <i class="mdi mdi-bus-articulated-front
+                                              mdi-48px"></i>
+
+                                    <div class="ml-4">
+
+                                        <h2 class="mb-2">
+                                            {{ departures_today }}
+                                        </h2>
+
+                                        <h4 class="mb-0">
+                                            Departures Today
+                                        </h4>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Routes and Buses -->
+
+                    <div class="col-md-4 stretch-card grid-margin">
+
+                        <div class="card bg-gradient-success
+                                    border-0 text-white p-3">
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-start">
+
+                                    <i class="mdi mdi-bus-articulated-front
+                                              mdi-48px"></i>
+
+                                    <div class="ml-4">
+
+                                        <div class="d-flex">
+
+                                            <div class="mr-5">
+
+                                                <h2 class="mb-1">
+                                                    {{ total_routes }}
+                                                </h2>
+
+                                                <span>
+                                                    Active Routes
+                                                </span>
+
+                                            </div>
+
+                                            <div>
+
+                                                <h2 class="mb-1">
+                                                    {{ total_buses }}
+                                                </h2>
+
+                                                <span>
+                                                    Active Buses
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- BUSINESS SUMMARY -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+
+                    <!-- Paid Revenue -->
+
+                    <div class="col-md-6 stretch-card grid-margin">
+
+                        <div class="card border-0">
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center">
+
+                                    <i class="mdi mdi-cash-multiple
+                                              mdi-48px text-success"></i>
+
+                                    <div class="ml-4">
+
+                                        <p class="text-muted mb-1">
+                                            Paid Revenue
+                                        </p>
+
+                                        <h2 class="mb-0">
+                                            {{ total_paid_revenue|floatformat:2 }}
+                                        </h2>
+
+                                        <small class="text-muted">
+                                            Revenue from paid bookings
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Seats Booked -->
+
+                    <div class="col-md-6 stretch-card grid-margin">
+
+                        <div class="card border-0">
+
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center">
+
+                                    <i class="mdi mdi-seat-passenger
+                                              mdi-48px text-info"></i>
+
+                                    <div class="ml-4">
+
+                                        <p class="text-muted mb-1">
+                                            Seats Booked
+                                        </p>
+
+                                        <h2 class="mb-0">
+                                            {{ total_seats_booked }}
+                                        </h2>
+
+                                        <small class="text-muted">
+                                            Pending + paid reservations
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- DASHBOARD DETAILS -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+
+                    <!-- Latest Bookings -->
+
+                    <div class="col-md-4 grid-margin stretch-card">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h4 class="card-title">
+                                    Latest Bookings
+                                </h4>
+
+
+                                {% for booking in latest_bookings %}
+
+                                    <div class="border-bottom py-3">
+
+                                        <div class="d-flex
+                                                    justify-content-between">
+
+                                            <strong>
+                                                {{ booking.booking_code }}
+                                            </strong>
+
+                                            {% if booking.booking_status == '1' %}
+
+                                                <span class="badge badge-warning">
+                                                    Pending
+                                                </span>
+
+                                            {% elif booking.booking_status == '2' %}
+
+                                                <span class="badge badge-success">
+                                                    Paid
+                                                </span>
+
+                                            {% elif booking.booking_status == '3' %}
+
+                                                <span class="badge badge-danger">
+                                                    Cancelled
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="mt-2">
+
+                                            <strong>
+                                                {{ booking.booking_user.username }}
+                                            </strong>
+
+                                        </div>
+
+
+                                        <small class="text-muted">
+
+                                            {{ booking.booking_schedule_vo.depart_locations_vo.locations_name }}
+
+                                            →
+
+                                            {{ booking.booking_schedule_vo.destination_locations_vo.locations_name }}
+
+                                        </small>
+
+
+                                        <div>
+
+                                            <small class="text-muted">
+
+                                                {{ booking.booking_date_created|date:"M d, Y" }}
+
+                                                {{ booking.booking_date_created|time:"g:i A" }}
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                {% empty %}
+
+                                    <p class="text-muted">
+                                        No bookings available.
+                                    </p>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Next Departures -->
+
+                    <div class="col-md-4 grid-margin stretch-card">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h4 class="card-title">
+                                    Next Departures
+                                </h4>
+
+
+                                {% for schedule in next_departures %}
+
+                                    <div class="border-bottom py-3">
+
+                                        <strong>
+
+                                            {{ schedule.depart_locations_vo.locations_name }}
+
+                                            →
+
+                                            {{ schedule.destination_locations_vo.locations_name }}
+
+                                        </strong>
+
+
+                                        <div class="mt-2">
+
+                                            Bus:
+                                            {{ schedule.schedule_bus_vo.bus_number }}
+
+                                        </div>
+
+
+                                        <small class="text-muted">
+
+                                            {{ schedule.trip_scheduled|date:"M d, Y" }}
+
+                                            at
+
+                                            {{ schedule.trip_scheduled|time:"g:i A" }}
+
+                                        </small>
+
+
+                                        <div class="mt-1">
+
+                                            <small class="text-muted">
+
+                                                Available Seats:
+                                                {{ schedule.count_available }}
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                {% empty %}
+
+                                    <p class="text-muted">
+                                        No upcoming departures.
+                                    </p>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Brief Info -->
+
+                    <div class="col-md-4 grid-margin stretch-card">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <h4 class="card-title">
+                                    Brief Info
+                                </h4>
+
+
+                                <!-- Customers -->
+
+                                <div class="d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            py-3 border-bottom">
+
+                                    <span>
+                                        Customers
+                                    </span>
+
+                                    <strong>
+                                        {{ total_customers }}
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- Pending -->
+
+                                <div class="d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            py-3 border-bottom">
+
+                                    <span>
+                                        Pending Bookings
+                                    </span>
+
+                                    <strong class="text-warning">
+                                        {{ pending_bookings }}
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- Paid -->
+
+                                <div class="d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            py-3 border-bottom">
+
+                                    <span>
+                                        Paid Bookings
+                                    </span>
+
+                                    <strong class="text-success">
+                                        {{ paid_bookings }}
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- Cancelled -->
+
+                                <div class="d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            py-3">
+
+                                    <span>
+                                        Cancelled Bookings
+                                    </span>
+
+                                    <strong class="text-danger">
+                                        {{ cancelled_bookings }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- ATTENTION NEEDED -->
+                <!-- ================================================= -->
+
+                <div class="row">
+
+                    <div class="col-12 grid-margin">
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+
+                                <div class="d-flex
+                                            justify-content-between
+                                            align-items-center
+                                            mb-4">
+
+                                    <div>
+
+                                        <h4 class="card-title mb-1">
+                                            Attention Needed
+                                        </h4>
+
+                                        <p class="text-muted mb-0">
+                                            Pending bookings waiting for
+                                            admin review
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="d-flex align-items-center">
+
+    <span class="badge badge-warning mr-3">
+        {{ pending_bookings }} Pending
+    </span>
+
+    <a href="{% url 'admin_view_managebooking' %}"
+       class="btn btn-sm btn-outline-primary">
+        Manage Bookings
+    </a>
+
+</div>
+
+                                </div>
+
+
+                                {% if pending_attention %}
+
+
+                                    <div class="table-responsive">
+
+                                        <table class="table">
+
+                                            <thead>
+
+                                            <tr>
+
+                                                <th>
+                                                    Booking
+                                                </th>
+
+                                                <th>
+                                                    Customer
+                                                </th>
+
+                                                <th>
+                                                    Route
+                                                </th>
+
+                                                <th>
+                                                    Seats
+                                                </th>
+
+                                                <th>
+                                                    Departure
+                                                </th>
+
+                                                <th>
+                                                    Status
+                                                </th>
+
+                                            </tr>
+
+                                            </thead>
+
+
+                                            <tbody>
+
+
+                                            {% for booking in pending_attention %}
+
+                                                <tr>
+
+                                                    <td>
+
+                                                        <strong>
+                                                            {{ booking.booking_code }}
+                                                        </strong>
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        {{ booking.booking_user.username }}
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        {{ booking.booking_schedule_vo.depart_locations_vo.locations_name }}
+
+                                                        →
+
+                                                        {{ booking.booking_schedule_vo.destination_locations_vo.locations_name }}
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        {{ booking.booking_seats }}
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        {{ booking.booking_schedule_vo.trip_scheduled|date:"M d, Y" }}
+
+                                                        <br>
+
+                                                        <small class="text-muted">
+
+                                                            {{ booking.booking_schedule_vo.trip_scheduled|time:"g:i A" }}
+
+                                                        </small>
+
+                                                    </td>
+
+
+                                                    <td>
+
+                                                        <span class="badge badge-warning">
+                                                            Pending
+                                                        </span>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                            {% endfor %}
+
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+
+                                {% else %}
+
+
+                                    <div class="text-center py-4">
+
+                                        <i class="mdi
+                                                  mdi-check-circle-outline
+                                                  mdi-48px
+                                                  text-success"></i>
+
+                                        <h5 class="mt-2">
+                                            You're all caught up
+                                        </h5>
+
+                                        <p class="text-muted mb-0">
+
+                                            No pending bookings require
+                                            review.
+
+                                        </p>
+
+                                    </div>
+
+
+                                {% endif %}
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- content-wrapper ends -->
+
+
+            <!-- ================================================= -->
+            <!-- FOOTER -->
+            <!-- ================================================= -->
+
+            {% include 'admin/footer.html' %}
+
+
+        </div>
+        <!-- main-panel ends -->
+
+    </div>
+    <!-- page-body-wrapper ends -->
+
+</div>
+<!-- container-scroller ends -->
+
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+
+<script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+
+<script src="../../static/adminResources/js/off-canvas.js"></script>
+
+<script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+
+<script src="../../static/adminResources/js/misc.js"></script>
+
+<script src="../../static/adminResources/js/settings.js"></script>
+
+<script src="../../static/adminResources/js/todolist.js"></script>
+
+<script src="../../static/adminResources/js/dashboard.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,679 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | Booking Confirmed</title>
+
+    <link rel="stylesheet"
+          href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="user-layout">
+
+
+    <!-- =========================================
+         COMMON SIDEBAR
+    ========================================== -->
+
+    {% include 'user/sidebar.html' %}
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="user-main">
+
+
+        <!-- COMMON HEADER -->
+
+        {% include 'user/header.html' %}
+
+
+
+        <div class="user-page">
+
+
+            <div class="booking-confirmation">
+
+
+                <!-- =========================================
+                     SUCCESS HEADER
+                ========================================== -->
+
+                <div class="booking-confirmation-header">
+
+
+                    <div class="booking-success-icon">
+                        ✓
+                    </div>
+
+
+                    <div class="booking-confirmation-heading">
+
+                        <div class="booking-confirmed-label">
+                            Booking Confirmed
+                        </div>
+
+
+                        <h1 class="booking-confirmation-title">
+                            Your trip is booked!
+                        </h1>
+
+
+                        <p class="booking-confirmation-text">
+                            Your booking has been created successfully.
+                            Keep the booking code below for your records.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+                     TWO COLUMN LAYOUT
+                ========================================== -->
+
+                <div class="booking-confirmation-columns">
+
+
+
+                    <!-- =====================================
+                         LEFT COLUMN
+                    ====================================== -->
+
+                    <div class="booking-confirmation-left">
+
+
+                        <!-- BOOKING CODE -->
+
+                        <section class="booking-reference-card">
+
+
+                            <div class="booking-reference-info">
+
+                                <span class="booking-reference-label">
+                                    Booking Code
+                                </span>
+
+
+                                <strong class="booking-reference-code">
+                                    {{ booking.booking_code }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="booking-status-area">
+
+
+                                {% if booking.booking_status == '1' %}
+
+                                    <div class="booking-status-large pending">
+
+                                        <span class="booking-status-icon">
+                                            ◷
+                                        </span>
+
+                                        <div>
+
+                                            <strong>
+                                                Pending
+                                            </strong>
+
+                                            <span>
+                                                Awaiting payment confirmation
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                {% elif booking.booking_status == '2' %}
+
+                                    <div class="booking-status-large paid">
+
+                                        <span class="booking-status-icon">
+                                            ✓
+                                        </span>
+
+                                        <div>
+
+                                            <strong>
+                                                Paid
+                                            </strong>
+
+                                            <span>
+                                                Payment confirmed
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                {% elif booking.booking_status == '3' %}
+
+                                    <div class="booking-status-large cancelled">
+
+                                        <span class="booking-status-icon">
+                                            ×
+                                        </span>
+
+                                        <div>
+
+                                            <strong>
+                                                Cancelled
+                                            </strong>
+
+                                            <span>
+                                                Booking cancelled
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             JOURNEY
+                        ================================== -->
+
+                        <section class="confirmation-card">
+
+
+                            <div class="confirmation-card-title">
+
+                                <span class="confirmation-title-icon">
+                                    ▣
+                                </span>
+
+                                Journey
+
+                            </div>
+
+
+
+                            <div class="confirmation-journey">
+
+
+                                <!-- DEPARTURE -->
+
+                                <div class="journey-point">
+
+
+                                    <div class="journey-marker start-marker"></div>
+
+
+                                    <div class="journey-content">
+
+                                        <span class="booking-detail-label">
+                                            Departure
+                                        </span>
+
+                                        <strong class="journey-location">
+                                            {{ schedule.depart_locations_vo }}
+                                        </strong>
+
+
+                                        <div class="journey-meta">
+
+                                            <span>
+                                                {{ schedule.trip_scheduled|date:"d M Y" }}
+                                            </span>
+
+                                            <span>
+                                                {{ schedule.trip_scheduled|date:"l" }}
+                                            </span>
+
+                                            <span>
+                                                {{ schedule.trip_scheduled|date:"h:i A" }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- CONNECTOR -->
+
+                                <div class="journey-connector"></div>
+
+
+
+                                <!-- DESTINATION -->
+
+                                <div class="journey-point">
+
+
+                                    <div class="journey-marker destination-marker"></div>
+
+
+                                    <div class="journey-content">
+
+                                        <span class="booking-detail-label">
+                                            Destination
+                                        </span>
+
+                                        <strong class="journey-location">
+                                            {{ schedule.destination_locations_vo }}
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             WHAT'S NEXT
+                        ================================== -->
+
+                        <section class="booking-next-step">
+
+
+                            <div class="booking-next-icon">
+                                i
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    What's Next?
+                                </h3>
+
+
+                                {% if booking.booking_status == '1' %}
+
+                                    <p>
+                                        Your booking is currently pending.
+                                        Once the administrator confirms your
+                                        payment, the status will be updated to
+                                        Paid and your ticket will become
+                                        available from My Trips.
+                                    </p>
+
+
+                                {% elif booking.booking_status == '2' %}
+
+                                    <p>
+                                        Your payment has been confirmed.
+                                        Your ticket is now available from
+                                        My Trips.
+                                    </p>
+
+
+                                {% else %}
+
+                                    <p>
+                                        This booking is currently cancelled.
+                                    </p>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             ACTION BUTTONS
+                        ================================== -->
+
+                        <div class="booking-success-actions">
+
+
+                            <button type="button"
+                                    class="btn-primary booking-print-button"
+                                    onclick="window.print();">
+
+                                <span>
+                                    ▣
+                                </span>
+
+                                Print Confirmation
+
+                            </button>
+
+
+                            <a href="{% url 'user_load_findtrip' %}"
+                               class="btn-secondary booking-another-button">
+
+                                <span>
+                                    ⌕
+                                </span>
+
+                                Book Another Trip
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =====================================
+                         RIGHT COLUMN
+                    ====================================== -->
+
+                    <div class="booking-confirmation-right">
+
+
+                        <!-- =================================
+                             TRIP DETAILS
+                        ================================== -->
+
+                        <section class="confirmation-card">
+
+
+                            <div class="confirmation-card-title">
+
+                                <span class="confirmation-title-icon">
+                                    ▤
+                                </span>
+
+                                Trip Details
+
+                            </div>
+
+
+
+                            <div class="booking-trip-detail-grid">
+
+
+                                <!-- PASSENGER -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        ♙
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Passenger Name
+                                        </span>
+
+                                        <strong>
+                                            {{ booking.booking_name }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- BUS -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        ▣
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Bus
+                                        </span>
+
+                                        <strong>
+                                            {{ schedule.schedule_bus_vo.bus_number }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- DATE -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        □
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Travel Date
+                                        </span>
+
+                                        <strong>
+                                            {{ schedule.trip_scheduled|date:"d M Y" }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- TIME -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        ◷
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Departure Time
+                                        </span>
+
+                                        <strong>
+                                            {{ schedule.trip_scheduled|date:"h:i A" }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- SEATS -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        ◉
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Seats
+                                        </span>
+
+                                        <strong>
+                                            {{ booking.booking_seats }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- STATUS -->
+
+                                <div class="booking-trip-detail-item">
+
+                                    <span class="detail-item-icon">
+                                        ◷
+                                    </span>
+
+                                    <div>
+
+                                        <span class="booking-detail-label">
+                                            Booking Status
+                                        </span>
+
+                                        <strong>
+
+                                            {{ booking.get_booking_status_display }}
+
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             FARE SUMMARY
+                        ================================== -->
+
+                        <section class="confirmation-card booking-fare-card">
+
+
+                            <div class="confirmation-card-title">
+
+                                <span class="confirmation-title-icon">
+                                    ▤
+                                </span>
+
+                                Fare Summary
+
+                            </div>
+
+
+
+                            <div class="booking-fare-content">
+
+
+                                <div class="booking-fare-line">
+
+                                    <span>
+                                        Fare per seat
+                                    </span>
+
+                                    <strong>
+                                        {{ schedule.schedule_fare|floatformat:2 }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="booking-fare-line">
+
+                                    <span>
+                                        Number of seats
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_seats }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="booking-fare-total">
+
+                                    <span>
+                                        Total Payable
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.total_payable|floatformat:2 }}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </section>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================================
+             COMMON FOOTER
+        ========================================== -->
+
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

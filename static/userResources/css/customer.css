@@ -1,0 +1,268 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+
+/* ==============================
+   CUSTOMER APPLICATION LAYOUT
+============================== */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   SIDEBAR
+============================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 275px;
+
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1000;
+}
+
+
+/* Logo */
+
+.sidebar-logo {
+    height: 84px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.sidebar-logo a {
+    color: #2563eb;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    text-decoration: none;
+}
+
+
+/* Menu */
+
+.sidebar-menu {
+    flex: 1;
+
+    padding: 27px 10px;
+}
+
+.menu-label {
+    margin: 0 13px 15px;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .05em;
+}
+
+
+/* Navigation */
+
+.nav-item {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px 18px;
+
+    margin-bottom: 6px;
+
+    border-radius: 9px;
+
+    color: #374151;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: background .15s ease,
+                color .15s ease;
+}
+
+.nav-item:hover {
+    background: #f3f6fb;
+    color: #2563eb;
+}
+
+.nav-item.active {
+    background: #eaf2ff;
+    color: #2563eb;
+}
+
+.nav-icon {
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+
+/* Bottom logout */
+
+.sidebar-bottom {
+    padding: 15px 10px 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.sidebar-bottom .nav-item {
+    margin: 0;
+
+    color: #b91c1c;
+}
+
+.sidebar-bottom .nav-item:hover {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+
+/* ==============================
+   MAIN CONTENT
+============================== */
+
+.main-content {
+    width: calc(100% - 275px);
+
+    min-height: 100vh;
+
+    margin-left: 275px;
+}
+
+
+/* ==============================
+   CUSTOMER TOP BAR
+============================== */
+
+.customer-topbar {
+    height: 84px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 38px;
+}
+
+.customer-page-title {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.customer-user {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.customer-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+/* ==============================
+   PAGE CONTENT
+============================== */
+
+.page-content {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 42px 48px 70px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 80px;
+    }
+
+    .sidebar-logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .sidebar-logo a {
+        font-size: 17px;
+    }
+
+    .menu-label,
+    .nav-item span:not(.nav-icon) {
+        display: none;
+    }
+
+    .nav-item {
+        justify-content: center;
+        padding: 14px 8px;
+    }
+
+    .main-content {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+    }
+
+    .page-content {
+        padding: 28px 20px;
+    }
+
+}

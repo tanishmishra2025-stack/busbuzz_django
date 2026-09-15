@@ -1,0 +1,473 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | Book Trip</title>
+
+    <link rel="stylesheet"
+          href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+<div class="user-layout">
+
+
+    <!-- COMMON SIDEBAR -->
+    {% include 'user/sidebar.html' %}
+
+
+    <main class="user-main">
+
+
+        <!-- COMMON HEADER -->
+        {% include 'user/header.html' %}
+
+
+        <div class="user-page">
+
+
+            <!-- =====================================
+                 PAGE HEADER
+            ====================================== -->
+
+            <div class="page-label">
+                Complete Booking
+            </div>
+
+            <h1 class="page-heading">
+                Book Your Trip
+            </h1>
+
+            <p class="page-description">
+                Review your selected trip and enter your booking details.
+            </p>
+
+
+            <!-- =====================================
+                 ERROR MESSAGE
+            ====================================== -->
+
+            {% if error_message %}
+
+                <div class="alert-error">
+                    {{ error_message }}
+                </div>
+
+            {% endif %}
+
+
+            <!-- =====================================
+                 BOOKING LAYOUT
+            ====================================== -->
+
+            <div class="booking-layout">
+
+
+                <!-- =================================
+                     LEFT: SELECTED TRIP
+                ================================== -->
+
+                <div class="user-card booking-trip-card">
+
+
+                    <div class="user-card-header">
+
+                        <h2 class="user-card-title">
+                            Selected Trip
+                        </h2>
+
+                        <div class="user-card-subtitle">
+                            Review your journey before booking.
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-card-body">
+
+
+                        <!-- ROUTE -->
+
+                        <div class="booking-route">
+
+
+                            <div class="booking-route-location">
+
+                                <span class="booking-detail-label">
+                                    Departure
+                                </span>
+
+                                <strong>
+                                    {{ schedule.depart_locations_vo }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="booking-route-arrow">
+                                →
+                            </div>
+
+
+                            <div class="booking-route-location">
+
+                                <span class="booking-detail-label">
+                                    Destination
+                                </span>
+
+                                <strong>
+                                    {{ schedule.destination_locations_vo }}
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- TRIP INFORMATION -->
+
+                        <div class="booking-trip-details">
+
+
+                            <div class="booking-detail-box">
+
+                                <span class="booking-detail-label">
+                                    Travel Date
+                                </span>
+
+                                <strong>
+                                    {{ schedule.trip_scheduled|date:"d M Y" }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="booking-detail-box">
+
+                                <span class="booking-detail-label">
+                                    Departure Time
+                                </span>
+
+                                <strong>
+                                    {{ schedule.trip_scheduled|date:"h:i A" }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="booking-detail-box">
+
+                                <span class="booking-detail-label">
+                                    Bus
+                                </span>
+
+                                <strong>
+                                    {{ schedule.schedule_bus_vo.bus_number }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="booking-detail-box">
+
+                                <span class="booking-detail-label">
+                                    Available Seats
+                                </span>
+
+                                <strong>
+                                    {{ schedule.count_available }}
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- FARE -->
+
+                        <div class="booking-fare-row">
+
+                            <span>
+                                Fare per seat
+                            </span>
+
+                            <strong>
+                                {{ schedule.schedule_fare }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     RIGHT: BOOKING FORM
+                ================================== -->
+
+                <div class="user-card booking-form-card">
+
+
+                    <div class="user-card-header">
+
+                        <h2 class="user-card-title">
+                            Booking Details
+                        </h2>
+
+                        <div class="user-card-subtitle">
+                            Enter the passenger and seat information.
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-card-body">
+
+
+                        <form method="post"
+                              action="{% url 'user_create_booking' %}"
+                              id="bookingForm">
+
+                            {% csrf_token %}
+
+
+                            <!-- SCHEDULE ID -->
+
+                            <input type="hidden"
+                                   name="scheduleId"
+                                   value="{{ schedule.schedule_id }}">
+
+
+                            <!-- PASSENGER NAME -->
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingName">
+                                    Passenger Name
+                                </label>
+
+                                <input type="text"
+       id="bookingName"
+       name="name"
+       class="form-control"
+       value="{{ request.user.username }}"
+       maxlength="250"
+       required>
+
+                            </div>
+
+
+                            <!-- NUMBER OF SEATS -->
+
+                            <div class="booking-form-group">
+
+                                <label for="bookingSeats">
+                                    Number of Seats
+                                </label>
+
+                              <input type="number"
+       id="bookingSeats"
+       name="seats"
+       class="form-control"
+       value="1"
+       min="1"
+       max="{{ max_bookable }}"
+       required>
+
+                                <div class="booking-form-help">
+
+                                    {% if max_bookable > 0 %}
+
+                                        You can book up to
+                                        <strong>{{ max_bookable }}</strong>
+                                        more seat{{ max_bookable|pluralize }}
+                                        for this trip.
+
+                                    {% else %}
+
+                                        You have reached the booking limit
+                                        for this trip.
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PRICE SUMMARY -->
+
+                            <div class="booking-price-summary">
+
+
+                                <div class="booking-price-row">
+
+                                    <span>
+                                        Fare per seat
+                                    </span>
+
+                                    <span>
+                                        {{ schedule.schedule_fare }}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="booking-price-row">
+
+                                    <span>
+                                        Seats
+                                    </span>
+
+                                    <span id="selectedSeats">
+                                        1
+                                    </span>
+
+                                </div>
+
+
+                                <div class="booking-price-total">
+
+                                    <span>
+                                        Total Fare
+                                    </span>
+
+                                    <strong id="totalFare">
+                                        {{ schedule.schedule_fare }}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- ACTIONS -->
+
+                            <div class="booking-form-actions">
+
+
+                                <a href="{% url 'user_load_findtrip' %}"
+                                   class="btn-secondary">
+
+                                    Back
+
+                                </a>
+
+
+                                {% if max_bookable > 0 and schedule.count_available > 0 %}
+
+                                    <button type="submit"
+                                            class="btn-primary">
+
+                                        Confirm Booking
+
+                                    </button>
+
+                                {% else %}
+
+                                    <button type="button"
+                                            class="btn-primary booking-disabled-button"
+                                            disabled>
+
+                                        Booking Unavailable
+
+                                    </button>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- COMMON FOOTER -->
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+
+</div>
+
+
+<!-- =========================================
+     FARE CALCULATION
+========================================= -->
+
+<script>
+
+    const seatInput =
+        document.getElementById("bookingSeats");
+
+    const selectedSeats =
+        document.getElementById("selectedSeats");
+
+    const totalFare =
+        document.getElementById("totalFare");
+
+    const farePerSeat =
+        Number("{{ schedule.schedule_fare }}");
+
+
+    if (seatInput) {
+
+        function updateFare() {
+
+            let seats =
+                parseInt(seatInput.value) || 1;
+
+            selectedSeats.textContent =
+                seats;
+
+            totalFare.textContent =
+                (farePerSeat * seats).toFixed(2);
+
+        }
+
+
+        seatInput.addEventListener(
+            "input",
+            updateFare
+        );
+
+
+        updateFare();
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

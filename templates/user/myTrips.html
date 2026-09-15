@@ -1,0 +1,427 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | My Trips</title>
+
+    <link rel="stylesheet"
+          href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="user-layout">
+
+
+    <!-- COMMON SIDEBAR -->
+
+    {% include 'user/sidebar.html' %}
+
+
+
+    <main class="user-main">
+
+
+        <!-- COMMON HEADER -->
+
+        {% include 'user/header.html' %}
+
+
+
+        <div class="user-page">
+
+
+            <!-- =========================================
+                 PAGE HEADER
+            ========================================== -->
+
+            <div class="page-label">
+                Your Bookings
+            </div>
+
+
+            <h1 class="page-heading">
+                My Trips
+            </h1>
+
+
+            <p class="page-description">
+                View your BusBuzz bookings and check their current status.
+            </p>
+
+
+
+            <!-- =========================================
+                 BOOKINGS
+            ========================================== -->
+
+            {% if bookings %}
+
+
+                <div class="my-trips-list">
+
+
+                    {% for booking in bookings %}
+
+
+                        <article class="my-trip-card">
+
+
+                            <!-- CARD HEADER -->
+
+                            <div class="my-trip-header">
+
+
+                                <div>
+
+                                    <span class="my-trip-code-label">
+                                        Booking Code
+                                    </span>
+
+                                    <strong class="my-trip-code">
+                                        {{ booking.booking_code }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div>
+
+
+                                    {% if booking.booking_status == '1' %}
+
+                                        <span class="my-trip-status pending">
+                                            Pending
+                                        </span>
+
+
+                                    {% elif booking.booking_status == '2' %}
+
+                                        <span class="my-trip-status paid">
+                                            Paid
+                                        </span>
+
+
+                                    {% elif booking.booking_status == '3' %}
+
+                                        <span class="my-trip-status cancelled">
+                                            Cancelled
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- ROUTE -->
+
+                            <div class="my-trip-route">
+
+
+                                <div class="my-trip-location">
+
+                                    <span class="my-trip-small-label">
+                                        Departure
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_schedule_vo.depart_locations_vo }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="my-trip-route-line">
+
+                                    <span class="my-trip-route-dot"></span>
+
+                                    <span class="my-trip-route-arrow">
+                                        →
+                                    </span>
+
+                                    <span class="my-trip-route-dot destination"></span>
+
+                                </div>
+
+
+                                <div class="my-trip-location destination">
+
+                                    <span class="my-trip-small-label">
+                                        Destination
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_schedule_vo.destination_locations_vo }}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- TRIP DETAILS -->
+
+                            <div class="my-trip-details">
+
+
+                                <div class="my-trip-detail">
+
+                                    <span class="my-trip-small-label">
+                                        Travel Date
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_schedule_vo.trip_scheduled|date:"d M Y" }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="my-trip-detail">
+
+                                    <span class="my-trip-small-label">
+                                        Departure
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_schedule_vo.trip_scheduled|date:"h:i A" }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="my-trip-detail">
+
+                                    <span class="my-trip-small-label">
+                                        Bus
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_schedule_vo.schedule_bus_vo.bus_number }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="my-trip-detail">
+
+                                    <span class="my-trip-small-label">
+                                        Seats
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.booking_seats }}
+                                    </strong>
+
+                                </div>
+
+
+
+                                <div class="my-trip-detail">
+
+                                    <span class="my-trip-small-label">
+                                        Total Fare
+                                    </span>
+
+                                    <strong>
+                                        {{ booking.total_payable|floatformat:2 }}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- STATUS MESSAGE + ACTIONS -->
+
+                            <div class="my-trip-footer">
+
+
+                                <div class="my-trip-status-message">
+
+
+                                    {% if booking.booking_status == '1' %}
+
+                                        Payment confirmation is pending.
+                                        Your ticket will become available
+                                        after the administrator verifies
+                                        payment.
+
+
+                                    {% elif booking.booking_status == '2' %}
+
+                                        Payment confirmed.
+                                        Your ticket is available.
+
+
+                                    {% elif booking.booking_status == '3' %}
+
+                                        This booking has been cancelled.
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+
+                                <div class="my-trip-actions">
+
+{% if booking.booking_status == '1' %}
+
+    <button type="button"
+            class="user-btn user-btn-secondary"
+            disabled>
+        Ticket Pending
+    </button>
+
+
+    <form method="post"
+          action="{% url 'user_cancel_booking' %}"
+          class="user-inline-form">
+
+        {% csrf_token %}
+
+        <input type="hidden"
+               name="bookingId"
+               value="{{ booking.booking_id }}">
+
+        <button type="submit"
+                class="user-btn user-btn-danger"
+                onclick="return confirm('Are you sure you want to cancel this booking?');">
+
+            Cancel Booking
+
+        </button>
+
+    </form>
+
+
+{% elif booking.booking_status == '2' %}
+
+    <a href="{% url 'user_view_ticket' booking.booking_id %}"
+       class="user-btn user-btn-primary">
+
+        Ticket
+
+    </a>
+
+
+{% elif booking.booking_status == '3' %}
+
+    <button type="button"
+            class="user-btn user-btn-secondary"
+            disabled>
+
+        Cancelled
+
+    </button>
+
+{% endif %}
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+
+
+            {% else %}
+
+
+                <!-- =========================================
+                     EMPTY STATE
+                ========================================== -->
+
+                <div class="user-card">
+
+
+                    <div class="my-trips-empty">
+
+
+                        <div class="my-trips-empty-icon">
+                            🚌
+                        </div>
+
+
+                        <h2>
+                            No trips yet
+                        </h2>
+
+
+                        <p>
+                            You haven't booked any BusBuzz trips yet.
+                            Find a trip to make your first booking.
+                        </p>
+
+
+                        <a href="{% url 'user_load_findtrip' %}"
+                           class="btn-primary">
+
+                            Find a Trip
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- COMMON FOOTER -->
+
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

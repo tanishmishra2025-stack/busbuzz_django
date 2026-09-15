@@ -1,0 +1,20 @@
+<header class="user-header">
+
+    <div class="user-header-title">
+        {{ page_title|default:"BusBuzz" }}
+    </div>
+
+
+    <div class="user-profile">
+
+        <div class="user-avatar">
+            {{ request.user.username|slice:":1" }}
+        </div>
+
+        <div class="user-name">
+            {{ request.user.username }}
+        </div>
+
+    </div>
+
+</header>

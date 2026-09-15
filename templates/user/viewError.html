@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BusBuzz - Error</title>
+</head>
+
+<body>
+
+<div style="
+    width: 500px;
+    margin: 80px auto;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+">
+
+    <h2>Unable to Complete Request</h2>
+
+    {% if message %}
+        <p style="color: red;">
+            {{ message }}
+        </p>
+    {% else %}
+        <p style="color: red;">
+            Something went wrong. Please try again.
+        </p>
+    {% endif %}
+
+    <br>
+
+    <a href="{% url 'user_load_findtrip' %}">
+        Back to Find Trip
+    </a>
+
+</div>
+
+</body>
+</html>

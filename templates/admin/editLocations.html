@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BusBuzz Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../static/adminResources/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../static/adminResources/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/adminResources/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../static/adminResources/images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'admin/header.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_settings-panel.html -->
+        <div id="settings-trigger"><i class="mdi mdi-format-color-fill"></i></div>
+        <div id="theme-settings" class="settings-panel">
+            <i class="settings-close mdi mdi-close"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+                <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                Default
+            </div>
+            <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                Dark
+            </div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+                <div class="tiles primary"></div>
+                <div class="tiles success"></div>
+                <div class="tiles warning"></div>
+                <div class="tiles danger"></div>
+                <div class="tiles info"></div>
+                <div class="tiles dark"></div>
+                <div class="tiles default light"></div>
+            </div>
+        </div>
+
+        {% include 'admin/menu.html' %}
+
+        <!-- partial -->
+        <!-- partial:../../partials/_sidebar.html -->
+
+
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+{#                    <h3 class="page-title">#}
+{#                        Routes#}
+{#                    </h3>#}
+                     <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Trip
+                                Locations</a>
+                            </li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Trip locations
+                            </li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Edit locations
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+              
+               <div class="row grid-margin">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                             <div class="row">
+                        <div class="col-9" style="margin-top: 15px;">
+                            <h4 class="card-title"><span class="mdi
+                            mdi-pencil-box-outline"></span>     Edit Locations
+                        </h4></div>
+                       
+                    </div>
+                                        <hr>
+                                           <form method="post"
+      action="{% url 'admin_update_locations' %}">
+                                                {% csrf_token %}
+                                                <fieldset>
+                                                {% for i in locations_vo_list %}
+                                                     <input type="hidden" id="locationsId" name="locationsId" 
+                                                                value="{{ i.locations_id }}">
+                                                 <div class="form-group ">
+                                                 <label class="col-form-label font-weight-bold">
+                                                            Locations:
+                                                        </label>
+                                                        <input
+                                                            class="form-control col-9"
+                                                            style="margin-left: 3.5%;"
+                                                            name="locationsName"
+                                                            placeholder="add locations"
+                                                            id="locationsName"
+                                                            value="{{ i.locations_name }}"
+                                                            rows="5"
+                                                            required>
+                                                 </div>
+                                                           <div class="form-group ">
+                                                            <label
+                                                                    for="status"
+                                                                    class="col-form-label font-weight-bold">Status: </label>
+                                                            <div>
+
+
+                                                                <select name="locationStatus"
+        id="locationStatus"
+        style="margin-left: 3.5%; width: 75%;"
+        class="form-control">
+
+    <option value="1"
+            {% if i.locations_status == '1' %}selected{% endif %}>
+        Active
+    </option>
+
+    <option value="2"
+            {% if i.locations_status == '2' %}selected{% endif %}>
+        Inactive
+    </option>
+
+</select>
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                   <br>
+                                                    <hr>
+
+                                                <div class="row">
+                                                        <div class="col-2"
+                                                             style="margin-left: 30%;">
+                                                            <input type="submit"
+                                                                   class="btn btn-info"
+                                                                   style="background: linear-gradient(to
+left,
+#ff8e97,
+#8b34cc)" value="Update">
+                                                        </div>
+
+                                                        <div class="col-2 btn bt">
+                      <a   class="btn btn-info text-light btn-fw"
+                                href="{% url 'admin_view_locations' %}"
+                               style="margin: -30px; margin-bottom: -30%;
+                               margin-left: 5%; background: linear-gradient(to
+left,
+#ff8e97,
+#8b34cc)" >
+                                Cancel
+                            </a>      </div>
+                                                    </div>
+                                                {% endfor %}
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- page-body-wrapper ends -->
+            </div>
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+            <script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+            <!-- endinject -->
+            <!-- inject:js -->
+            <script src="../../static/adminResources/js/off-canvas.js"></script>
+            <script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+            <script src="../../static/adminResources/js/misc.js"></script>
+            <script src="../../static/adminResources/js/settings.js"></script>
+            <script src="../../static/adminResources/js/todolist.js"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+            <script src="../../static/adminResources/js/formpickers.js"></script>
+            <script src="../../static/adminResources/js/form-validation.js"></script>
+            <script src="../../static/adminResources/js/bt-maxLength.js"></script>
+            <!-- End custom js for this page-->
+        </div>
+</body>
+
+</html>

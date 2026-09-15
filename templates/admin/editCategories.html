@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BusBuzz Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/materialdesignicons.min.css">
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.base.css">
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/adminResources/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon"
+          href="../../static/adminResources/images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+
+
+    <!-- admin/header.html -->
+    {% include 'admin/header.html' %}
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_settings-panel.html -->
+        <div id="settings-trigger"><i class="mdi mdi-format-color-fill"></i>
+        </div>
+        <div id="theme-settings" class="settings-panel">
+            <i class="settings-close mdi mdi-close"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options selected"
+                 id="sidebar-default-theme">
+                <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                Default
+            </div>
+            <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                Dark
+            </div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+                <div class="tiles primary"></div>
+                <div class="tiles success"></div>
+                <div class="tiles warning"></div>
+                <div class="tiles danger"></div>
+                <div class="tiles info"></div>
+                <div class="tiles dark"></div>
+                <div class="tiles default light"></div>
+            </div>
+        </div>
+
+        <!-- admin/menu.html -->
+        {% include 'admin/menu.html' %}
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title">
+                        Add Buses
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Bus
+                                Types</a></li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Add
+                                Bus Types
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                {#                <div class="alert alert-primary" role="alert">#}
+                {##}
+                {#                    <div class="row">#}
+                {#                        <div class="col-1" style="margin-top:1%;"><i#}
+                {#                                class="mdi mdi-alert-circle menu-icon mdi-48px"></i>#}
+                {#                        </div>#}
+                {#                        <div class="col-11 ">#}
+                {#                            <h5>Add new bus</h5>#}
+                {#                            <p>Use the form below to create new bus type. You#}
+                {#                                can#}
+                {#                                upload and manage a seats map for the bus type.#}
+                {#                                This will let your customers to select specific#}
+                {#                                bus#}
+                {#                                seats on the seats map at Tickets step during#}
+                {#                                the#}
+                {#                                booking process. To upload a seats map use the#}
+                {#                                browse button below and click on "Save" button.#}
+                {#                                Only images in jpeg file format are acceptable.#}
+                {#                                Once you upload and save you will be redirected#}
+                {#                                to#}
+                {#                                a page where you can manage the seats map and#}
+                {#                                make#}
+                {#                                it active for users. If you don't want to use a#}
+                {#                                seats map then you need to define the number of#}
+                {#                                seats available for this bus type. In this case#}
+                {#                                the#}
+                {#                                system will automatically assign available#}
+                {#                                seats to#}
+                {#                                each booking and ticket.#}
+                {#                            </p>#}
+                {#                        </div>#}
+                {##}
+                {#                    </div>#}
+                {#                </div>#}
+                <div class="row grid-margin">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form action="{% url 'admin_update_categories' %}"
+                                                  method="post">
+
+                                                {% csrf_token %}
+
+                                                <fieldset>
+                                                    {% for category_vo in category_vo_list %}
+                                                        <input type="hidden"
+                                                               id="categoryId"
+                                                               name="categoryId"
+                                                               value="
+{{ category_vo.category_id }}">
+                                                        <div class="row">
+                                                            <div class="form-group col-6">
+                                                                <label class="col-sm-6 col-form-label font-weight-bold">
+                                                                    Category
+                                                                    Name:
+                                                                </label>
+                                                                <div class="col-sm-9">
+                                                                    <input
+                                                                            type="text"
+                                                                            name="categoryName"
+                                                                            class="form-control"
+                                                                            value="{{ category_vo.category_name }}"
+                                                                            id="categoryName"
+                                                                            placeholder="Economy">
+                                                                </div>
+                                                                <div id="bus-Registration-Number-err"></div>
+                                                            </div>
+                                                            <div class="form-group col-6">
+                                                                <label
+                                                                        for="status"
+                                                                        class="col-sm-6 col-form-label font-weight-bold">Status</label>
+                                                                <div class="col-sm-9">
+
+                                                                    <select id="categoryStatus"
+                                                                            class="form-control"
+                                                                            name="categoryStatus">
+
+                                                                        <option value="1"
+                                                                                {% if category_vo.category_status == '1' %}selected{% endif %}>
+                                                                            Active
+                                                                        </option>
+
+                                                                        <option value="2"
+                                                                                {% if category_vo.category_status == '2' %}selected{% endif %}>
+                                                                            Inactive
+                                                                        </option>
+
+                                                                    </select>
+                                                                    <div id="bus-type-err"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label class="col-sm-6 col-form-label font-weight-bold">
+                                                                Category
+                                                                Description:
+                                                            </label>
+                                                            <textarea
+                                                                    class="form-control col-10"
+                                                                    style="margin-left: 2.5%;"
+                                                                    name="categoryDescription"
+                                                                    id="categoryDescription"
+                                                                    rows="5"
+                                                                    required>{{ category_vo.category_description }}</textarea>
+                                                        </div>
+
+                                                        {#  Submit buttons #}
+                                                        <div class="row">
+                                                            <div class="col-2"
+                                                                 style="margin-left: 30%;">
+                                                                <input type="submit"
+                                                                       class="btn btn-info"
+                                                                       style="background: linear-gradient(to
+left,
+#ff8e97,
+#8b34cc)" value="Update">
+                                                            </div>
+
+                                                            <div class="col-2 btn bt">
+                                                                <a class="btn btn-info text-light btn-fw"
+                                                                   href="{% url 'admin_view_categories' %}"
+                                                                   style="margin: -30px; margin-bottom: -30%;
+                               margin-left: 5%; background: linear-gradient(to
+left,
+#ff8e97,
+#8b34cc)">
+                                                                    Cancel
+                                                                </a></div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- admin/footer.html -->
+                        {% include 'admin/footer.html' %}
+
+
+                        <!-- partial -->
+                    </div>
+                    <!-- main-panel ends -->
+                </div>
+                <!-- page-body-wrapper ends -->
+            </div>
+            <!-- container-scroller -->
+
+            <!-- plugins:js -->
+            <script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+            <script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+            <!-- endinject -->
+            <!-- Plugin js for this page-->
+            <!-- End plugin js for this page-->
+            <!-- inject:js -->
+            <script src="../../static/adminResources/js/off-canvas.js"></script>
+            <script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+            <script src="../../static/adminResources/js/misc.js"></script>
+            <script src="../../static/adminResources/js/settings.js"></script>
+            <script src="../../static/adminResources/js/todolist.js"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+
+            <script src="../../static/adminResources/js/addbustype.js"></script>
+            <script src="../../static/adminResources/js/dashboard.js"></script>
+            <!-- End custom js for this page-->
+</body>
+
+</html>

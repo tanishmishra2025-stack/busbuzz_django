@@ -1,0 +1,275 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | Available Trips</title>
+
+    <link rel="stylesheet"
+          href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+<div class="user-layout">
+
+
+    <!-- COMMON SIDEBAR -->
+    {% include 'user/sidebar.html' %}
+
+
+    <main class="user-main">
+
+
+        <!-- COMMON HEADER -->
+        {% include 'user/header.html' %}
+
+
+        <div class="user-page">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-label">
+                Search Results
+            </div>
+
+            <h1 class="page-heading">
+                Available Trips
+            </h1>
+
+            <p class="page-description">
+                Select an available trip to continue with your booking.
+            </p>
+
+
+            <!-- RESULTS TABLE -->
+
+            {% if schedules %}
+
+                <div class="user-card">
+
+                    <div class="user-card-header">
+
+                        <h2 class="user-card-title">
+                            Available Buses
+                        </h2>
+
+                        <div class="user-card-subtitle">
+                            Trips matching your selected route and travel date
+                        </div>
+
+                    </div>
+
+
+                    <div class="trip-table-wrapper">
+
+                        <table class="trip-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Departure</th>
+                                    <th>Destination</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Bus</th>
+                                    <th>Available Seats</th>
+                                    <th>Fare</th>
+                                    <th>Action</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for schedule in schedules %}
+
+                                    <tr>
+
+                                        <!-- DEPARTURE -->
+
+                                        <td>
+
+                                            <strong>
+                                                {{ schedule.depart_locations_vo }}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <!-- DESTINATION -->
+
+                                        <td>
+
+                                            <strong>
+                                                {{ schedule.destination_locations_vo }}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <!-- DATE -->
+
+                                        <td>
+
+                                            {{ schedule.trip_scheduled|date:"d M Y" }}
+
+                                        </td>
+
+
+                                        <!-- TIME -->
+
+                                        <td>
+
+                                            {{ schedule.trip_scheduled|date:"h:i A" }}
+
+                                        </td>
+
+
+                                        <!-- BUS -->
+
+                                        <td>
+
+                                            {{ schedule.schedule_bus_vo.bus_number }}
+
+                                        </td>
+
+
+                                        <!-- AVAILABLE SEATS -->
+
+                                        <td>
+
+                                            {% if schedule.count_available > 0 %}
+
+                                                <span class="seat-available">
+
+                                                    {{ schedule.count_available }}
+                                                    available
+
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="seat-unavailable">
+
+                                                    Full
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                        <!-- FARE -->
+
+                                        <td>
+
+                                            <strong>
+                                                {{ schedule.schedule_fare }}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <!-- ACTION -->
+
+                                        <td>
+
+                                            {% if schedule.count_available > 0 %}
+
+                                                <a href="{% url 'user_load_bookingform' %}?scheduleId={{ schedule.schedule_id }}"
+                                                   class="table-book-btn">
+
+                                                    Book Trip
+
+                                                </a>
+
+                                            {% else %}
+
+                                                <span class="table-disabled-btn">
+
+                                                    Full
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- NO RESULTS -->
+
+                <div class="user-card">
+
+                    <div class="trip-empty-state">
+
+                        <div class="trip-empty-icon">
+                            🚌
+                        </div>
+
+                        <h2>
+                            No trips available
+                        </h2>
+
+                        <p>
+                            We couldn't find an active trip for the selected
+                            route and travel date.
+                        </p>
+
+                        <a href="{% url 'user_load_findtrip' %}"
+                           class="btn-primary">
+
+                            Search Again
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- COMMON FOOTER -->
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

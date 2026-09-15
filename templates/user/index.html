@@ -1,0 +1,401 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | Dashboard</title>
+
+    <link rel="stylesheet"
+      href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="user-layout">
+
+
+    <!-- =========================
+         COMMON SIDEBAR
+    ========================== -->
+
+    {% include 'user/sidebar.html' %}
+
+
+
+    <!-- =========================
+         MAIN USER AREA
+    ========================== -->
+
+    <main class="user-main">
+
+
+        <!-- =========================
+             COMMON HEADER
+        ========================== -->
+
+        {% include 'user/header.html' %}
+
+
+
+        <!-- =========================
+             DASHBOARD CONTENT
+        ========================== -->
+
+        <div class="user-page">
+
+
+            <!-- WELCOME -->
+
+            <section class="dashboard-welcome">
+
+
+                <div class="page-label">
+                    Customer Dashboard
+                </div>
+
+
+                <h1 class="page-heading">
+                    Welcome back, {{ request.user.username }}
+                </h1>
+
+
+                <p class="page-description">
+                    Here's an overview of your BusBuzz journeys.
+                </p>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 DASHBOARD STATISTICS
+            ========================== -->
+
+            <section class="dashboard-stats">
+
+
+                <!-- UPCOMING TRIPS -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="dashboard-stat-header">
+
+                        <span class="dashboard-stat-label">
+                            Upcoming Trips
+                        </span>
+
+                        <span class="dashboard-stat-icon">
+                            ◷
+                        </span>
+
+                    </div>
+
+
+                    <div class="dashboard-stat-value">
+                        {{ upcoming_count }}
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- TOTAL BOOKINGS -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="dashboard-stat-header">
+
+                        <span class="dashboard-stat-label">
+                            Total Bookings
+                        </span>
+
+                        <span class="dashboard-stat-icon">
+                            ▣
+                        </span>
+
+                    </div>
+
+
+                    <div class="dashboard-stat-value">
+                        {{ booking_count }}
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SEATS BOOKED -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="dashboard-stat-header">
+
+                        <span class="dashboard-stat-label">
+                            Seats Booked
+                        </span>
+
+                        <span class="dashboard-stat-icon">
+                            ◉
+                        </span>
+
+                    </div>
+
+
+                    <div class="dashboard-stat-value">
+                        {{ total_seats }}
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 NEXT UPCOMING TRIP
+            ========================== -->
+
+            <section class="user-card dashboard-next-trip">
+
+
+                <div class="user-card-header">
+
+
+                    <h2 class="user-card-title">
+                        Upcoming Trip
+                    </h2>
+
+
+                    <div class="user-card-subtitle">
+                        Your nearest scheduled journey
+                    </div>
+
+
+                </div>
+
+
+
+                {% if next_booking %}
+
+
+                    <div class="user-card-body">
+
+
+                        <!-- ROUTE -->
+
+                        <div class="dashboard-trip-route">
+
+
+                            <span class="dashboard-trip-location">
+
+                                {{ next_booking.booking_schedule_vo.depart_locations_vo }}
+
+                            </span>
+
+
+                            <span class="dashboard-trip-arrow">
+                                →
+                            </span>
+
+
+                            <span class="dashboard-trip-location">
+
+                                {{ next_booking.booking_schedule_vo.destination_locations_vo }}
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <!-- DATE / TIME -->
+
+                        <div class="dashboard-trip-date">
+
+                            {{ next_booking.booking_schedule_vo.trip_scheduled|date:"l, d M Y" }}
+
+                            at
+
+                            {{ next_booking.booking_schedule_vo.trip_scheduled|date:"h:i A" }}
+
+                        </div>
+
+
+
+                        <!-- TRIP DETAILS -->
+
+                        <div class="dashboard-trip-details">
+
+
+                            <!-- BUS -->
+
+                            <div class="dashboard-detail-box">
+
+                                <div class="dashboard-detail-label">
+                                    Bus
+                                </div>
+
+                                <div class="dashboard-detail-value">
+
+                                    {{ next_booking.booking_schedule_vo.schedule_bus_vo.bus_number }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- PASSENGER -->
+
+                            <div class="dashboard-detail-box">
+
+                                <div class="dashboard-detail-label">
+                                    Passenger
+                                </div>
+
+                                <div class="dashboard-detail-value">
+
+                                    {{ next_booking.booking_name }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- SEATS -->
+
+                            <div class="dashboard-detail-box">
+
+                                <div class="dashboard-detail-label">
+                                    Seats
+                                </div>
+
+                                <div class="dashboard-detail-value">
+
+                                    {{ next_booking.booking_seats }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- BOOKING CODE -->
+
+                            <div class="dashboard-detail-box">
+
+                                <div class="dashboard-detail-label">
+                                    Booking Code
+                                </div>
+
+                                <div class="dashboard-detail-value">
+
+                                    {{ next_booking.booking_code }}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div class="dashboard-trip-footer">
+
+
+                            {% if next_booking.booking_status == '1' %}
+
+                                <span class="booking-status booking-status-pending">
+                                    Pending
+                                </span>
+
+                            {% elif next_booking.booking_status == '2' %}
+
+                                <span class="booking-status booking-status-paid">
+                                    Paid
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <!-- EMPTY STATE -->
+
+                    <div class="dashboard-empty-state">
+
+
+                        <div class="dashboard-empty-icon">
+                            🚌
+                        </div>
+
+
+                        <h3>
+                            No upcoming trips
+                        </h3>
+
+
+                        <p>
+                            Your next scheduled journey will appear here.
+                        </p>
+
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             COMMON FOOTER
+        ========================== -->
+
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

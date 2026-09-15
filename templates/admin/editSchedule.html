@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BusBuzz Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/materialdesignicons.min.css">
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.base.css">
+    <link rel="stylesheet"
+          href="../../static/adminResources/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../static/adminResources/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon"
+          href="../../static/adminResources/images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'admin/header.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_settings-panel.html -->
+        <div id="settings-trigger"><i class="mdi mdi-format-color-fill"></i>
+        </div>
+        <div id="theme-settings" class="settings-panel">
+            <i class="settings-close mdi mdi-close"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options selected"
+                 id="sidebar-default-theme">
+                <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                Default
+            </div>
+            <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                Dark
+            </div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+                <div class="tiles primary"></div>
+                <div class="tiles success"></div>
+                <div class="tiles warning"></div>
+                <div class="tiles danger"></div>
+                <div class="tiles info"></div>
+                <div class="tiles dark"></div>
+                <div class="tiles default light"></div>
+            </div>
+        </div>
+
+        {% include 'admin/menu.html' %}
+
+        <!-- partial -->
+        <!-- partial:../../partials/_sidebar.html -->
+
+
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    {#                    <h3 class="page-title">#}
+                    {#                        Trip Locations#}
+                    {#                    </h3>#}
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">
+                                Trip Schedules</a>
+                            </li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Trip Schedule Lists
+                            </li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">Edit Schedule
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                {#            <div class="alert alert-primary" role="alert">#}
+                {##}
+                {#                <div class="row">#}
+                {#                    <div class="col-1" style="margin-top:1%;"><i#}
+                {#                            class="mdi mdi-alert-circle menu-icon mdi-48px"></i>#}
+                {#                    </div>#}
+                {#                    <div class="col-11 ">#}
+                {#                        <h5>Add City</h5>#}
+                {#                        <p>Please enter the city name and click 'Add +' button#}
+                {#                            to add new city.#}
+                {#                        </p>#}
+                {#                    </div>#}
+                {##}
+                {#                </div>#}
+                {#            </div>#}
+                <div class="row grid-margin">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div class="row">
+                                                <div class="col-9"
+                                                     style="margin-top: 15px;">
+                                                    <h4 class="card-title"><span
+                                                            class="mdi
+                            mdi-plus"></span>Edit Schedule
+                                                    </h4></div>
+                                                <div class="col-2 btn bt">
+                                                    <a class="btn btn-outline-primary btn-fw"
+                                                       href="{% url 'admin_view_schedule' %}"
+                                                       style="margin: -30px; margin-bottom: -30%;
+                               margin-left: 5%;">
+                                                        Trip Schedules List
+                                                    </a></div>
+                                            </div>
+                                            <hr>
+                                            <form method="post"
+                                                  action="{% url 'admin_update_schedule' %}">
+                                                {% csrf_token %}
+
+                                                <input type="hidden"
+                                                       name="scheduleId"
+                                                       value="{{ schedule_vo.schedule_id }}">
+                                                <fieldset>
+                                                    <div class="row">
+
+                                                        <div class="form-group col-6">
+                                                            <label
+                                                                    for="scheduleBusId"
+                                                                    class="col-form-label font-weight-bold">Bus: </label>
+                                                            <select
+                                                                    name="scheduleBusId"
+                                                                    id="scheduleBusId"
+                                                                    style="margin-left: 3.5%;width: 75%;"
+                                                                    class="form-control">
+                                                                {% for bus in buses_vo_list %}
+                                                                    <option value="{{ bus.bus_id }}"
+                                                                            {% if schedule_vo.schedule_bus_vo_id == bus.bus_id %}
+                                                                            selected
+                                                                            {% endif %}>
+                                                                        {{ bus.bus_number }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+
+                                                        </div>
+
+
+                                                        <div class="form-group col-6">
+                                                            <label
+                                                                    for="status"
+                                                                    class="col-form-label font-weight-bold">Status: </label>
+                                                            <select
+                                                                    name="scheduleStatus"
+                                                                    id="scheduleStatus"
+                                                                    style="margin-left: 3.5%;width: 75%;"
+                                                                    class="form-control">
+                                                                <option value="1"
+                                                                        {% if schedule_vo.schedule_status == '1' %}
+                                                                        selected
+                                                                        {% endif %}>
+                                                                    Active
+                                                                </option>
+
+                                                                <option value="2"
+                                                                        {% if schedule_vo.schedule_status == '2' %}
+                                                                        selected
+                                                                        {% endif %}>
+                                                                    Cancelled
+                                                                </option>
+                                                            </select>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="form-group col-6">
+                                                            <label
+                                                                    for="categor"
+                                                                    class="col-form-label font-weight-bold">Depart: </label>
+                                                            <select
+                                                                    name="departLocationsId"
+                                                                    id="departLocationsId"
+                                                                    style="margin-left: 3.5%; width: 75%;"
+                                                                    class="form-control">
+
+                                                                {% for location in locations_vo_list %}
+                                                                    <option value="{{ location.locations_id }}"
+                                                                            {% if schedule_vo.depart_locations_vo_id == location.locations_id %}
+                                                                            selected
+                                                                            {% endif %}>
+                                                                        {{ location.locations_name }}
+                                                                    </option>
+                                                                {% endfor %}
+
+                                                            </select>
+
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label
+                                                                    for="categor"
+                                                                    class="col-form-label font-weight-bold">Destination: </label>
+                                                            <select
+                                                                    name="destinationLocationsId"
+                                                                    id="destinationLocationsId"
+                                                                    style="margin-left: 3.5%;width: 75%;"
+                                                                    class="form-control">
+                                                                {% for location in locations_vo_list %}
+                                                                    <option value="{{ location.locations_id }}"
+                                                                            {% if schedule_vo.destination_locations_vo_id == location.locations_id %}
+                                                                            selected
+                                                                            {% endif %}>
+                                                                        {{ location.locations_name }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="
+                                                    form-group col-6">
+                                                            <label class="col-form-label font-weight-bold">
+                                                                Fare:
+                                                                <span
+                                                                        style="color: red">*</span>
+                                                            </label>
+                                                            <input type="number"
+                                                                   step="0.01"
+                                                                   min="0"
+                                                                   class="form-control col-9"
+                                                                   style="margin-left: 3.5%;"
+                                                                   name="scheduleFare"
+                                                                   id="scheduleFare"
+                                                                   value="{{ schedule_vo.schedule_fare }}"
+                                                                   required>
+                                                        </div>
+
+
+                                                        <div class="
+                                                    form-group col-6">
+                                                            <label class="col-form-label font-weight-bold">
+                                                                Schedule:
+                                                                <span
+                                                                        style="color: red">*</span>
+                                                            </label>
+                                                            <input class="form-control col-9"
+                                                                   style="margin-left: 3.5%;"
+                                                                   type="datetime-local"
+                                                                   name="tripScheduled"
+                                                                   id="tripScheduled"
+                                                                   value="{{ schedule_vo.trip_scheduled|date:'Y-m-d\\TH:i' }}"
+                                                                   required>
+                                                        </div>
+                                                    </div>
+
+                                                    <br>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-2"
+                                                             style="margin-left: 30%;">
+                                                            <input type="submit"
+                                                                   class="btn btn-info"
+                                                                   style="background: linear-gradient(to
+left,
+#ff8e97,
+#8b34cc)" value="Update">
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <a href="{% url 'admin_view_schedule' %}"
+   class="btn btn-info text-light"
+   style="background: linear-gradient(to left, #ff8e97, #8b34cc);">
+    Cancel
+</a>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            {% include 'admin/footer.html' %}
+
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../static/adminResources/js/vendor.bundle.base.js"></script>
+<script src="../../static/adminResources/js/vendor.bundle.addons.js"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="../../static/adminResources/js/off-canvas.js"></script>
+<script src="../../static/adminResources/js/hoverable-collapse.js"></script>
+<script src="../../static/adminResources/js/misc.js"></script>
+<script src="../../static/adminResources/js/settings.js"></script>
+<script src="../../static/adminResources/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="../../static/adminResources/js/formpickers.js"></script>
+<script src="../../static/adminResources/js/form-validation.js"></script>
+<script src="../../static/adminResources/js/bt-maxLength.js"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>

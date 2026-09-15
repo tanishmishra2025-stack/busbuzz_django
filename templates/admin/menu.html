@@ -1,0 +1,346 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+
+    <ul class="nav">
+
+        <!-- =====================================================
+             BUSBUZZ BRAND
+             ===================================================== -->
+        <li class="nav-item nav-profile">
+            <span class="nav-link">
+
+                <img src="../../static/adminResources/images/logo.jpg"
+                     alt="BusBuzz Logo"/>
+
+                <span class="nav-profile-text">
+                    BusBuzz
+                </span>
+
+            </span>
+        </li>
+
+
+        <!-- =====================================================
+             HOME / DASHBOARD
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               href="{% url 'admin_load_dashboard' %}">
+
+                <i class="mdi mdi-home-outline menu-icon"></i>
+
+                <span class="menu-title">
+                    Home
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- =====================================================
+             TRIP CATEGORIES
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               data-toggle="collapse"
+               href="#trip-categories"
+               aria-expanded="false"
+               aria-controls="trip-categories">
+
+                <i class="mdi mdi-bus menu-icon"></i>
+
+                <span class="menu-title">
+                    Trip Categories
+                </span>
+
+                <i class="menu-arrow"></i>
+
+            </a>
+
+
+            <div class="collapse"
+                 id="trip-categories">
+
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_load_categories' %}">
+
+                            Add Category
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_view_categories' %}">
+
+                            Trip Categories
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </li>
+
+
+        <!-- =====================================================
+             TRIP LOCATIONS
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               data-toggle="collapse"
+               href="#trip-locations"
+               aria-expanded="false"
+               aria-controls="trip-locations">
+
+                <i class="mdi mdi-map-marker-outline menu-icon"></i>
+
+                <span class="menu-title">
+                    Trip Locations
+                </span>
+
+                <i class="menu-arrow"></i>
+
+            </a>
+
+
+            <div class="collapse"
+                 id="trip-locations">
+
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_load_locations' %}">
+
+                            Add Location
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_view_locations' %}">
+
+                            Bus Stop Locations
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </li>
+
+
+        <!-- =====================================================
+             BUSES
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               data-toggle="collapse"
+               href="#buses"
+               aria-expanded="false"
+               aria-controls="buses">
+
+                <i class="mdi mdi-bus-side menu-icon"></i>
+
+                <span class="menu-title">
+                    Buses
+                </span>
+
+                <i class="menu-arrow"></i>
+
+            </a>
+
+
+            <div class="collapse"
+                 id="buses">
+
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_load_bus' %}">
+
+                            Add Bus
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_view_bus' %}">
+
+                            Bus List
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </li>
+
+
+        <!-- =====================================================
+             TRIP SCHEDULES
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               data-toggle="collapse"
+               href="#trip-schedules"
+               aria-expanded="false"
+               aria-controls="trip-schedules">
+
+                <i class="mdi mdi-calendar-clock menu-icon"></i>
+
+                <span class="menu-title">
+                    Trip Schedules
+                </span>
+
+                <i class="menu-arrow"></i>
+
+            </a>
+
+
+            <div class="collapse"
+                 id="trip-schedules">
+
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_load_schedule' %}">
+
+                            Add Schedule
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_view_schedule' %}">
+
+                            Trip Schedules List
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </li>
+
+
+        <!-- =====================================================
+             MANAGE BOOKINGS
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               data-toggle="collapse"
+               href="#manage-bookings"
+               aria-expanded="false"
+               aria-controls="manage-bookings">
+
+                <i class="mdi mdi-book-open menu-icon"></i>
+
+                <span class="menu-title">
+                    Manage Bookings
+                </span>
+
+                <i class="menu-arrow"></i>
+
+            </a>
+
+
+            <div class="collapse"
+                 id="manage-bookings">
+
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'admin_view_managebooking' %}">
+
+                            Booking List
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </li>
+
+
+        <!-- =====================================================
+             LOGOUT
+             ===================================================== -->
+        <li class="nav-item">
+
+            <a class="nav-link"
+               href="{% url 'admin_load_logout' %}">
+
+                <i class="mdi mdi-logout-variant menu-icon"></i>
+
+                <span class="menu-title">
+                    Logout
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- =====================================================
+             SIDEBAR FOOTER
+             ===================================================== -->
+        <li class="nav-item sidebar-actions">
+
+            <span class="nav-link text-muted">
+                &copy; 2026 BusBuzz
+            </span>
+
+        </li>
+
+    </ul>
+
+</nav>

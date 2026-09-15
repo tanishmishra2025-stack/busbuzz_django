@@ -1,0 +1,265 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz | Find Trip</title>
+
+   <link rel="stylesheet"
+      href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="user-layout">
+
+
+    {% include 'user/sidebar.html' %}
+
+
+    <main class="user-main">
+
+
+        {% include 'user/header.html' %}
+
+
+        <div class="user-page">
+
+
+            <div class="page-label">
+                Plan Your Journey
+            </div>
+
+
+            <h1 class="page-heading">
+                Find a Trip
+            </h1>
+
+
+            <p class="page-description">
+                Choose your departure, destination and travel date.
+            </p>
+
+
+            {% if error_message %}
+
+                <div class="alert-error">
+                    {{ error_message }}
+                </div>
+
+            {% endif %}
+
+
+            <div class="user-card">
+
+
+                <div class="user-card-header">
+
+                    <h2 class="user-card-title">
+                        Check Availability
+                    </h2>
+
+                    <div class="user-card-subtitle">
+                        Search available BusBuzz trips for your route.
+                    </div>
+
+                </div>
+
+
+                <div class="user-card-body">
+
+
+                    <form method="post"
+                          action="{% url 'user_check_availability' %}">
+
+                        {% csrf_token %}
+
+
+                        <div class="trip-search-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="departure">
+                                    Departure
+                                </label>
+
+                                <select id="departure"
+                                        name="departure"
+                                        class="form-control"
+                                        required>
+
+                                    <option value=""
+                                            disabled
+                                            selected>
+                                        Select departure
+                                    </option>
+
+
+                                    {% for location in locations_vo_list %}
+
+                                        <option value="{{ location.locations_id }}">
+                                            {{ location.locations_name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="trip-search-arrow">
+                                →
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="destination">
+                                    Destination
+                                </label>
+
+                                <select id="destination"
+                                        name="destination"
+                                        class="form-control"
+                                        required>
+
+                                    <option value=""
+                                            disabled
+                                            selected>
+                                        Select destination
+                                    </option>
+
+
+                                    {% for location in locations_vo_list %}
+
+                                        <option value="{{ location.locations_id }}">
+                                            {{ location.locations_name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="date">
+                                    Travel Date
+                                </label>
+
+                                <input type="date"
+                                       id="date"
+                                       name="date"
+                                       class="form-control"
+                                       min="{{ min_date }}"
+                                       required>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button type="submit"
+                                    class="btn-primary">
+                                Check Availability
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        {% include 'user/footer.html' %}
+
+
+    </main>
+
+
+</div>
+
+
+<script>
+
+    const departure =
+        document.getElementById("departure");
+
+    const destination =
+        document.getElementById("destination");
+
+
+    function updateLocations() {
+
+        const departureValue = departure.value;
+
+        const destinationValue = destination.value;
+
+
+        Array.from(destination.options).forEach(function(option) {
+
+            if (option.value === "") {
+                option.disabled = true;
+            } else {
+                option.disabled =
+                    option.value === departureValue;
+            }
+
+        });
+
+
+        Array.from(departure.options).forEach(function(option) {
+
+            if (option.value === "") {
+                option.disabled = true;
+            } else {
+                option.disabled =
+                    option.value === destinationValue;
+            }
+
+        });
+
+    }
+
+
+    departure.addEventListener(
+        "change",
+        updateLocations
+    );
+
+
+    destination.addEventListener(
+        "change",
+        updateLocations
+    );
+
+</script>
+
+
+</body>
+
+</html>

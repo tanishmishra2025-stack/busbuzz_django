@@ -1,0 +1,380 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BusBuzz - Ticket</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'userResources/css/user.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="user-layout">
+
+
+    {% include 'user/sidebar.html' %}
+
+
+    <div class="user-main">
+
+
+        {% include 'user/header.html' %}
+
+
+        <main class="user-page">
+
+
+            <div class="ticket-page">
+
+
+                <!-- =========================
+                     PAGE HEADING
+                ========================== -->
+
+                <div class="ticket-page-heading">
+
+                    <div>
+
+                        <h1>
+                            Bus Ticket
+                        </h1>
+
+                        <p>
+                            Your confirmed BusBuzz travel ticket.
+                        </p>
+
+                    </div>
+
+
+                    <button type="button"
+                            class="user-btn user-btn-primary ticket-print-button"
+                            onclick="window.print();">
+
+                        Print Ticket
+
+                    </button>
+
+                </div>
+
+
+                <!-- =========================
+                     TICKET
+                ========================== -->
+
+                <div class="bus-ticket">
+
+
+                    <!-- TICKET HEADER -->
+
+                    <div class="bus-ticket-header">
+
+                        <div>
+
+                            <div class="bus-ticket-brand">
+                                BusBuzz
+                            </div>
+
+                            <div class="bus-ticket-subtitle">
+                                Travel Ticket
+                            </div>
+
+                        </div>
+
+
+                        <div class="bus-ticket-status">
+
+                            <span class="ticket-paid-badge">
+                                PAID
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOOKING REFERENCE -->
+
+                    <div class="ticket-booking-reference">
+
+                        <span>
+                            Booking Code
+                        </span>
+
+                        <strong>
+                            {{ booking.booking_code }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- =========================
+                         ROUTE
+                    ========================== -->
+
+                    <div class="ticket-route-section">
+
+
+                        <div class="ticket-route-location">
+
+                            <span class="ticket-route-label">
+                                FROM
+                            </span>
+
+                            <h2>
+                                {{ schedule.depart_locations_vo.locations_name }}
+                            </h2>
+
+                        </div>
+
+
+                        <div class="ticket-route-arrow">
+
+                            →
+
+                        </div>
+
+
+                        <div class="ticket-route-location">
+
+                            <span class="ticket-route-label">
+                                TO
+                            </span>
+
+                            <h2>
+                                {{ schedule.destination_locations_vo.locations_name }}
+                            </h2>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =========================
+                         TRIP INFORMATION
+                    ========================== -->
+
+                    <div class="ticket-details-grid">
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Passenger
+                            </span>
+
+                            <strong>
+                                {{ booking.booking_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Date
+                            </span>
+
+                            <strong>
+                                {{ schedule.trip_scheduled|date:"d M Y" }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Departure Time
+                            </span>
+
+                            <strong>
+                                {{ schedule.trip_scheduled|date:"h:i A" }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Bus Number
+                            </span>
+
+                            <strong>
+                                {{ schedule.schedule_bus_vo.bus_number }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Seats
+                            </span>
+
+                            <strong>
+                                {{ booking.booking_seats }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-detail">
+
+                            <span>
+                                Booking Status
+                            </span>
+
+                            <strong class="ticket-paid-text">
+                                Paid
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =========================
+                         FARE
+                    ========================== -->
+
+                    <div class="ticket-fare-section">
+
+
+                        <div>
+
+                            <span>
+                                Fare Per Seat
+                            </span>
+
+                            <strong>
+                                {{ schedule.schedule_fare|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Number of Seats
+                            </span>
+
+                            <strong>
+                                {{ booking.booking_seats }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ticket-total">
+
+                            <span>
+                                Total Paid
+                            </span>
+
+                            <strong>
+                                {{ booking.total_payable|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =========================
+                         FOOTER
+                    ========================== -->
+
+                    <div class="bus-ticket-footer">
+
+                        <div>
+
+                            <strong>
+                                BusBuzz
+                            </strong>
+
+                            <p>
+                                Please keep this ticket available during your
+                                journey.
+                            </p>
+
+                        </div>
+
+
+                        <div class="ticket-reference-small">
+
+                            {{ booking.booking_code }}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================
+                     ACTIONS
+                ========================== -->
+
+                <div class="ticket-actions">
+
+
+                    <a href="{% url 'user_my_trips' %}"
+                       class="user-btn user-btn-secondary">
+
+                        Back to My Trips
+
+                    </a>
+
+
+                    <button type="button"
+                            class="user-btn user-btn-primary"
+                            onclick="window.print();">
+
+                        Print Ticket
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+        {% include 'user/footer.html' %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
